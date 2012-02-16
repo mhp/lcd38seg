@@ -1,5 +1,5 @@
 /*
-  38seg-demo
+  lcd38seg
   
   Simple example of how to drive a 38-segment display
   found in the Nottingham Hackspace.
