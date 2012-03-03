@@ -37,7 +37,12 @@
 	padding : 0;
 }
 
-	
+#tabs li#active a {
+        background : #fff;
+        border-bottom : 1px solid #fff;
+        color : #000;
+}
+
 #tabs a:link, #tabs a:visited	{
 	background : #E8EBF0;
 	border : 1px solid #ccc;
@@ -120,7 +125,7 @@
     <ul id="tabs">
       <li><a href="/lcd38seg/">Overview</a></li>
       <li><a href="/lcd38seg/pinout.html">Pinout</a></li>
-      <li><a href="/lcd38seg/font.html">Font designer</a></li>
+      <li id="active"><a href="/lcd38seg/font.html">Font designer</a></li>
       <!--li><a href="/lcd38seg/news.html">News</a></li-->
     </ul>
 
