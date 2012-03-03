@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+
+  <title>mhp/lcd38seg @ GitHub</title>
+
+  <style type="text/css">
+    body {
+      margin-top: 1.0em;
+      background-color: #ffffff;
+      font-family: Helvetica, Arial, FreeSans, sans-serif;
+      color: #000000;
+    }
+    #container {
+      margin: 0 auto;
+      width: 700px;
+    }
+    h1 { font-size: 2.8em; margin-bottom: 3px; }
+    h1 a { text-decoration: none }
+    h2 { font-size: 1.5em; clear: both; }
+    pre { background: #000; color: #fff; padding: 15px;}
+    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
+
+/* CSS Tabs inspired by http://kalsey.com/tools/csstabs/ */
+#tabs {
+	border-bottom : 1px solid #ccc;
+	margin : 0;
+	padding-bottom : 19px;
+	padding-left : 10px;
+}
+
+#tabs ul, #tabs li	{
+	display : inline;
+	list-style-type : none;
+	margin : 0;
+	padding : 0;
+}
+
+	
+#tabs a:link, #tabs a:visited	{
+	background : #E8EBF0;
+	border : 1px solid #ccc;
+	color : #666;
+	float : left;
+	font-size : small;
+	font-weight : normal;
+	line-height : 14px;
+	margin-right : 8px;
+	padding : 2px 10px 2px 10px;
+	text-decoration : none;
+}
+
+#tabs a:link.active, #tabs a:visited.active	{
+	background : #fff;
+	border-bottom : 1px solid #fff;
+	color : #000;
+}
+
+#tabs a:hover	{
+	color : #f00;
+}
+
+	
+    .lcd { float:left; margin:0 2em; }
+    .lcd .on { fill: yellow; } 
+    .lcd .off { fill: black; } 
+  </style>
+
+  <script type="text/javascript">
+    // This function is called on page load.
+    function initLCD() {
+      updateLCD();
+    }
+
+    function updateLCD() {
+      hexValue = document.getElementById('hex_value');
+      hexValue.innerHTML = "0x" + getByte(0).toString(16)
+                         + ", 0x" + getByte(1).toString(16)
+                         + ", 0x" + getByte(2).toString(16)
+                         + ", 0x" + getByte(3).toString(16)
+                         + ", 0x" + getByte(4).toString(16);
+    }
+
+    function getByte(b) {
+      var value=0;
+      for(var i=0; i<8; i++) {
+        try {
+          var thing = document.getElementById('b'+b+'-'+i);
+          if (thing.getAttribute('class') === 'on') {
+            value = value | (1<<i);
+          }
+        } catch (e) {
+        }
+      }
+      return value;
+    }
+
+    function toggle(o,b) {
+      thing = document.getElementById('b'+o+'-'+b);
+      if (thing.getAttribute('class') === 'off')
+      {
+        thing.setAttribute('class', 'on');
+      }
+      else
+      {
+        thing.setAttribute('class', 'off');
+      }
+      updateLCD();
+    }
+  </script>
+</head>
+
+<body onload="initLCD()">
+
+  <div id="container">
+
+    <h1><a href="https://github.com/mhp/lcd38seg">lcd38seg</a></h1>
+
+    <ul id="tabs">
+      <li><a href="/">Overview</a></li>
+      <li><a href="/pinout.html">Pinout</a></li>
+      <li><a href="/font.html">Font designer</a></li>
+      <!--li><a href="/news.html">News</a></li-->
+    </ul>
+
+ <h2>Design a symbol</h2>
+  <div class="lcd">
+    <!-- Create the SVG pane. -->
+    <svg xmlns="http://www.w3.org/2000/svg" height="352" width="182">
+      <rect x="0" y="0" width="182" height="352" fill="grey" id="bpard"/>
+
+      <!-- Top row, left to right -->
+      <path d="M 59,2 c -58,13 -58,46 -57,68 l 0,-68 z" class="off" id="b3-7" onclick="toggle(3,7)" />
+      <path d="M 60,3 c -58,13 -58,46 -58,67 l 58,0 z" class="off" id="b2-0" onclick="toggle(2,0)" />
+      <rect x="62" y="2" width="58" height="68" class="off" id="b2-3" onclick="toggle(2,3)" />
+      <path d="M 122,3 c 58,13 58,46 58,67 l -58,0 z" class="off" id="b2-6" onclick="toggle(2,6)" />
+      <path d="M 123,2 c 58,13 58,46 57,68 l 0,-68 z" class="off" id="b2-7" onclick="toggle(2,7)" />
+
+      <rect x="2" y="72" width="58" height="68" class="off" id="b3-6" onclick="toggle(3,6)" />
+      <polygon points="62,73 62,139   90,106" class="off" id="b2-1" onclick="toggle(2,1)" />
+      <polygon points="63,72 119,72   91,105" class="off" id="b2-2" onclick="toggle(2,2)" />
+      <polygon points="63,140 119,140 91,107" class="off" id="b3-5" onclick="toggle(3,5)" />
+      <polygon points="120,139 120,73 92,106" class="off" id="b2-4" onclick="toggle(2,4)" />
+      <polygon points="122,72 179,72, 122,139" class="off" id="b1-0" onclick="toggle(1,0)" />
+      <polygon points="180,140 180,73, 123,140" class="off" id="b1-1" onclick="toggle(1,1)" />
+
+      <!-- Middle row -->
+      <polygon points="2,143 2,209    30,176" class="off" id="b3-2" onclick="toggle(3,2)" />
+      <polygon points="3,142 59,142   31,175" class="off" id="b3-3" onclick="toggle(3,3)" />
+      <polygon points="3,210 59,210   31,177" class="off" id="b3-1" onclick="toggle(3,1)" />
+      <polygon points="60,209 60,143  32,176" class="off" id="b3-0" onclick="toggle(3,0)" />
+      <polygon points="62,143 62,209   90,176" class="off" id="b3-4" onclick="toggle(3,4)" />
+      <polygon points="63,142 119,142  91,175" class="off" id="b2-5" onclick="toggle(2,5)" />
+      <polygon points="63,210 119,210  91,177" class="off" id="b4-7" onclick="toggle(4,7)" />
+      <polygon points="120,209 120,143 92,176" class="off" id="b1-2" onclick="toggle(1,2)" />
+      <polygon points="122,143 122,209 150,176" class="off" id="b1-3" onclick="toggle(1,3)" />
+      <polygon points="123,142 179,142 151,175" class="off" id="b1-4" onclick="toggle(1,4)" />
+      <polygon points="123,210 179,210 151,177" class="off" id="b1-6" onclick="toggle(1,6)" />
+      <polygon points="180,209 180,143 152,176" class="off" id="b1-5" onclick="toggle(1,5)" />
+
+      <polygon points="2,213 30,280 2,280" class="off" id="b4-5" onclick="toggle(4,5)" />
+      <polygon points="3,212 60,212 60,280 32,280" class="off" id="b4-6" onclick="toggle(4,6)" />
+      <polygon points="62,213 62,279   90,246" class="off" id="b4-4" onclick="toggle(4,4)" />
+      <polygon points="63,212 120,212 120,279" class="off" id="b1-7" onclick="toggle(1,7)" />
+      <polygon points="63,280 119,280  91,247" class="off" id="b0-2" onclick="toggle(0,2)" />
+      <polygon points="122,212 179,212 150,280 122,280" class="off" id="b0-0" onclick="toggle(0,0)" />
+      <polygon points="180,213 152,280 180,280" class="off" id="b0-1" onclick="toggle(0,1)" />
+
+      <!-- Bottom row -->
+      <path d="M 2,350 l 56,0 c -56,-13 -56,-46 -56,-67 z" class="off" id="b4-1" onclick="toggle(4,1)" />
+      <path d="M 30,282 l 29,67 c -56,-13 -56,-46 -56,-67 z" class="off" id="b4-2" onclick="toggle(4,2)" />
+      <polygon points="32,282 60,282 60,348" class="off" id="b4-3" onclick="toggle(4,3)" />
+      <rect x="62" y="282" width="58" height="68" class="off" id="b0-6" onclick="toggle(0,6)" />
+      <polygon points="122,282 150,282 122,348" class="off" id="b0-3" onclick="toggle(0,3)" />
+      <path d="M 152,282 l -29,67 c 56,-13 56,-46 56,-67 z" class="off" id="b0-4" onclick="toggle(0,4)" />
+      <path d="M 124,350 c 56,-13 56,-46 56,-67 l 0,67 z" class="off" id="b0-5" onclick="toggle(0,5)" />
+    </svg>
+  </div>
+  <div>
+    <p>Click on segments on the left and find the corresponding hex values for your symbol.</p>
+    <table>
+      <tr><td><i>Your symbol:</i></td><td id="hex_value"></td></tr>
+    </table>
+  </div>
+
+</body>
+</html>
